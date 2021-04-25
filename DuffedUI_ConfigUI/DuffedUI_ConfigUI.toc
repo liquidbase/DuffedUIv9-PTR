@@ -8,7 +8,6 @@
 ## SavedVariables: DuffedUIConfigAll, DuffedUIConfigPublic
 ## SavedVariablesPerCharacter: DuffedUIConfigPrivate
 ## RequiredDeps: DuffedUI
-## OptionalDeps: DuffedUI_EditedDefaultConfig
 
 core.lua
 
