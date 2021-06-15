@@ -19,6 +19,7 @@ local ChangeLogData = {
 		"- Added new Socket of Domination",
 		"- Removed scripts for master loot and roll frame",
 		"- Bugfixes",
+		"- Ignore item level on gems by Rav99",
 	" ",
 	"Important:",
 		"Please Report all bugs on the issue tracker => |cffC41F3Bhttps://github.com/liquidbase/DuffedUIv9/issues|r",
