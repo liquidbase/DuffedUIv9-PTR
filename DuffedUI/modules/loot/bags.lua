@@ -85,7 +85,9 @@ StaticPopupDialogs['BUY_BANK_SLOT'] = {
 	button1 = YES,
 	button2 = NO,
 	OnAccept = PurchaseSlot,
-	OnShow = function(self) MoneyFrame_Update(self.moneyFrame, GetBankSlotCost()) end,
+	OnShow = function(self)
+		MoneyFrame_Update(self.moneyFrame, GetBankSlotCost())
+	end,
 	hasMoneyFrame = 1,
 	timeout = 0,
 	hideOnEscape = 1,
@@ -134,17 +136,27 @@ else
 end
 
 local subs = {}
-for k = 0, 20 do subs[k + 1] = GetItemSubClassInfo(LE_ITEM_CLASS_WEAPON, k) end
+for k = 0, 20 do
+	subs[k + 1] = GetItemSubClassInfo(LE_ITEM_CLASS_WEAPON, k)
+end
 
-for _, subclass in ipairs(unusable[1]) do unusable[subs[subclass+1]] = true end
+for _, subclass in ipairs(unusable[1]) do
+	unusable[subs[subclass+1]] = true
+end
 
 subs = {}
-for k = 0, 11 do subs[k + 1] = GetItemSubClassInfo(LE_ITEM_CLASS_ARMOR, k) end
+for k = 0, 11 do
+	subs[k + 1] = GetItemSubClassInfo(LE_ITEM_CLASS_ARMOR, k)
+end
 
-for _, subclass in ipairs(unusable[2]) do unusable[subs[subclass + 1]] = true end
+for _, subclass in ipairs(unusable[2]) do
+	unusable[subs[subclass + 1]] = true
+end
 
 local function IsClassUnusable(subclass, slot)
-	if subclass then return slot ~= '' and unusable[subclass] or slot == 'INVTYPE_WEAPONOFFHAND' and unusable[3] end
+	if subclass then
+		return slot ~= '' and unusable[subclass] or slot == 'INVTYPE_WEAPONOFFHAND' and unusable[3]
+	end
 end
 
 local function IsItemUnusable(...)
@@ -175,7 +187,9 @@ end)
 local function Stuffing_OnShow()
 	Stuffing:PLAYERBANKSLOTS_CHANGED(29)
 
-	for i = 0, #BAGS_BACKPACK - 1 do Stuffing:BAG_UPDATE(i) end
+	for i = 0, #BAGS_BACKPACK - 1 do
+		Stuffing:BAG_UPDATE(i)
+	end
 
 	Stuffing:Layout()
 	Stuffing:SearchReset()
@@ -185,29 +199,45 @@ end
 local function StuffingBank_OnHide()
 	CloseBankFrame()
 
-	if Stuffing.frame:IsShown() then Stuffing.frame:Hide() end
-	if bag_bars == 1 then bag_bars = 0 end
+	if Stuffing.frame:IsShown() then
+		Stuffing.frame:Hide()
+	end
+
+	if bag_bars == 1 then
+		bag_bars = 0
+	end
 
 	PlaySound(SOUNDKIT.IG_BACKPACK_CLOSE)
 end
 
 local function Stuffing_OnHide()
-	if Stuffing.bankFrame and Stuffing.bankFrame:IsShown() then Stuffing.bankFrame:Hide() end
-	if bag_bars == 1 then bag_bars = 0 end
+	if Stuffing.bankFrame and Stuffing.bankFrame:IsShown() then
+		Stuffing.bankFrame:Hide()
+	end
+
+	if bag_bars == 1 then
+		bag_bars = 0
+	end
 
 	PlaySound(SOUNDKIT.IG_BACKPACK_CLOSE)
 end
 
 local function Stuffing_Open()
-	if not Stuffing.frame:IsShown() then Stuffing.frame:Show() end
+	if not Stuffing.frame:IsShown() then
+		Stuffing.frame:Show()
+	end
 end
 
-local function Stuffing_Close() 
+local function Stuffing_Close()
 	Stuffing.frame:Hide()
 end
 
 local function Stuffing_Toggle()
-	if Stuffing.frame:IsShown() then Stuffing.frame:Hide() else Stuffing.frame:Show() end
+	if Stuffing.frame:IsShown() then
+		Stuffing.frame:Hide()
+	else
+		Stuffing.frame:Show()
+	end
 end
 
 local trashButton = {}
@@ -217,7 +247,9 @@ local S_ITEM_LEVEL = '^' .. string_gsub(_G.ITEM_LEVEL, '%%d', '(%%d+)')
 
 local ItemDB = {}
 local function IsRealItemLevel(link, owner, bag, slot)
-	if ItemDB[link] then return ItemDB[link] end
+	if ItemDB[link] then
+		return ItemDB[link]
+	end
 
 	local realItemLevel
 
@@ -239,7 +271,9 @@ local function IsRealItemLevel(link, owner, bag, slot)
 				local msg = line:GetText()
 				if msg and string_find(msg, S_ITEM_LEVEL) then
 					local itemLevel = string_match(msg, S_ITEM_LEVEL)
-					if itemLevel and (tonumber(itemLevel) > 0) then realItemLevel = itemLevel end
+					if itemLevel and (tonumber(itemLevel) > 0) then
+						realItemLevel = itemLevel
+					end
 				end
 			end
 		end
@@ -254,25 +288,41 @@ function Stuffing:SlotUpdate(b)
 	local clink = GetContainerItemLink(b.bag, b.slot)
 	local isQuestItem, questId = GetContainerItemQuestInfo(b.bag, b.slot)
 
-	if not b.frame.lock then b.frame:SetBackdropBorderColor(unpack(C['general']['bordercolor'])) end
+	if not b.frame.lock then
+		b.frame:SetBackdropBorderColor(unpack(C['general']['bordercolor']))
+	end
 
 	if b.cooldown and StuffingFrameBags and StuffingFrameBags:IsShown() then
 		local start, duration, enable = GetContainerItemCooldown(b.bag, b.slot)
 		CooldownFrame_Set(b.cooldown, start, duration, enable)
 	end
 
-	if C['bags']['ItemLevel'] == true then b.frame.text:SetText('') end
-	if b.frame.Azerite then b.frame.Azerite:Hide() end
-	if b.frame.Corrupt then b.frame.Corrupt:Hide() end
+	if C['bags'].ItemLevel == true then
+		b.frame.text:SetText('')
+	end
+
+	if b.frame.Azerite then
+		b.frame.Azerite:Hide()
+	end
+	
+	if b.frame.Corrupt then
+		b.frame.Corrupt:Hide()
+	end
 	
 	b.frame.isJunk = (quality and quality== Enum.ItemQuality.Poor) and not noValue
 	if b.frame.JunkIcon then
-		if b.frame.isJunk and C['bags']['JunkIcon'] then b.frame.JunkIcon:Show() else b.frame.JunkIcon:Hide() end
+		if b.frame.isJunk and C['bags'].JunkIcon then
+			b.frame.JunkIcon:Show()
+		else
+			b.frame.JunkIcon:Hide()
+		end
 	end
 	
-	if (b.frame.ScrapIcon) and C['bags']['ScrapIcon'] then
+	if (b.frame.ScrapIcon) and C['bags'].ScrapIcon then
 		local itemLocation = ItemLocation:CreateFromBagAndSlot(b.frame:GetParent():GetID(), b.frame:GetID())
-		if not itemLocation then return end
+		if not itemLocation then
+			return
+		end
 
 		if itemLocation and itemLocation ~= '' then
 			if (C_Item.DoesItemExist(itemLocation) and C_Item.CanScrapItem(itemLocation)) then
@@ -289,7 +339,7 @@ function Stuffing:SlotUpdate(b)
 		b.frame.UpgradeIcon:ClearAllPoints()
 		b.frame.UpgradeIcon:SetTexture('Interface\\AddOns\\DuffedUI\\media\\textures\\upgradeicon')
 		b.frame.UpgradeIcon:SetPoint('BOTTOMRIGHT', 6, -3)
-		b.frame.UpgradeIcon:SetSize(C['bags']['ButtonSize'] / 1.4, C['bags']['ButtonSize'] / 1.4)
+		b.frame.UpgradeIcon:SetSize(C['bags'].ButtonSize / 1.4, C['bags'].ButtonSize / 1.4)
 		b.frame.UpgradeIcon:SetTexCoord(0, 1, 0, 1)
 		
 		if _G.PawnIsContainerItemAnUpgrade then itemIsUpgrade = _G.PawnIsContainerItemAnUpgrade(b.frame:GetParent():GetID(), b.frame:GetID()) end
@@ -305,7 +355,7 @@ function Stuffing:SlotUpdate(b)
 	local battlePayTexture = b.frame.BattlepayItemTexture
 	local flashAnim = b.frame.flashAnim
 	local newItemAnim = b.frame.newitemglowAnim
-	if newItemTexture and C['bags']['PulseNewItem'] then
+	if newItemTexture and C['bags'].PulseNewItem then
 		if C_NewItems_IsNewItem(b.bag, b.slot) then
 			if IsBattlePayItem(b.bag, b.slot) then
 				newItemTexture:Hide()
@@ -342,7 +392,7 @@ function Stuffing:SlotUpdate(b)
 		if questId and not isActiveQuest then
 			questTexture:SetTexture('Interface\\AddOns\\DuffedUI\\media\\textures\\questicon.tga')
 			questTexture:SetPoint('BOTTOMLEFT', 1, 1)
-			questTexture:SetSize(C['bags']['ButtonSize'] / 1.2, C['bags']['ButtonSize'] / 1.2)
+			questTexture:SetSize(C['bags'].ButtonSize / 1.2, C['bags'].ButtonSize / 1.2)
 			questTexture:SetTexCoord(0, 1, 0, 1)
 			questTexture:Show()
 		else
@@ -356,15 +406,17 @@ function Stuffing:SlotUpdate(b)
 	end
 
 	if clink then
-		b.name, _, _, b['ItemLevel'], b.level, _, _, _, _, _, _, b.itemClassID, b.itemSubClassID = GetItemInfo(clink)
+		b.name, _, _, b.itemlevel, b.level, _, _, _, _, _, _, b.itemClassID, b.itemSubClassID = GetItemInfo(clink)
 
-		if C['bags']['ItemLevel'] == true and b['ItemLevel'] and quality > 1 and (b.itemClassID == 2 or b.itemClassID == 4 or (b.itemClassID == 3 and b.itemSubClassID == 11)) then
-			b['ItemLevel'] = IsRealItemLevel(clink, self, b.bag, b.slot) or b['ItemLevel']
-			b.frame.text:SetText(b['ItemLevel'])
+		if C['bags'].ItemLevel == true and b.itemlevel and quality > 1 and (b.itemClassID == 2 or b.itemClassID == 4 or (b.itemClassID == 3 and b.itemSubClassID == 11)) then
+			b.itemlevel = IsRealItemLevel(clink, self, b.bag, b.slot) or b.itemlevel
+			b.frame.text:SetText(b.itemlevel)
 			b.frame.text:SetTextColor(GetItemQualityColor(quality))
 		end
 
-		if b.frame.Azerite and C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID(clink) then b.frame.Azerite:Show() end
+		if b.frame.Azerite and C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID(clink) then
+			b.frame.Azerite:Show()
+		end
 		
 		if (IsItemUnusable(clink) or b.level and b.level > D['Level']) and not locked then
 			_G[b.frame:GetName()..'IconTexture']:SetVertexColor(1, 0.1, 0.1)
@@ -389,10 +441,14 @@ function Stuffing:SlotUpdate(b)
 end
 
 function Stuffing:BagSlotUpdate(bag)
-	if not self.buttons then return end
+	if not self.buttons then
+		return
+	end
 
 	for _, v in ipairs(self.buttons) do
-		if v.bag == bag then self:SlotUpdate(v) end
+		if v.bag == bag then
+			self:SlotUpdate(v)
+		end
 	end
 end
 
@@ -404,7 +460,9 @@ function Stuffing:UpdateCooldowns(b)
 end
 
 local function Stuffing_TooltipHide()
-	if not GameTooltip:IsForbidden() then GameTooltip:Hide() end
+	if not GameTooltip:IsForbidden() then
+		GameTooltip:Hide()
+	end
 end
 
 local function Stuffing_TooltipShow(self)
@@ -423,7 +481,7 @@ local function Stuffing_CreateReagentContainer()
 	local NumRows, LastRowButton, NumButtons, LastButton = 0, ReagentBankFrameItem1, 1, ReagentBankFrameItem1
 	local Deposit = ReagentBankFrame.DespositButton
 
-	Reagent:SetWidth(((C['bags']['ButtonSize'] + C['bags']['ButtonSpace']) * C['bags'].BankColumns) + 17)
+	Reagent:SetWidth(((C['bags'].ButtonSize + C['bags'].ButtonSpace) * C['bags'].BankColumns) + 17)
 	Reagent:SetPoint('BOTTOMLEFT', DuffedUIChatBackgroundLeft, 'TOPLEFT', 0, 5)
 	Reagent:SetTemplate('Transparent')
 	Reagent:SetFrameStrata(_G['StuffingFrameBank']:GetFrameStrata())
@@ -433,7 +491,9 @@ local function Stuffing_CreateReagentContainer()
 	Reagent:SetClampedToScreen(true)
 	Reagent:SetClampRectInsets(0, 0, 0, -20)
 	Reagent:SetScript('OnMouseDown', function(self, button)
-		if IsShiftKeyDown() and button == 'LeftButton' then self:StartMoving() end
+		if IsShiftKeyDown() and button == 'LeftButton' then
+			self:StartMoving()
+		end
 	end)
 	Reagent:SetScript('OnMouseUp', Reagent.StopMovingOrSizing)
 
@@ -503,7 +563,9 @@ local function Stuffing_CreateReagentContainer()
 	Close:SetPoint('TOPRIGHT', 0, 1)
 	Close:SkinCloseButton()
 	Close:RegisterForClicks('AnyUp')
-	Close:SetScript('OnClick', function() StuffingBank_OnHide() end)
+	Close:SetScript('OnClick', function()
+		StuffingBank_OnHide()
+	end)
 
 	for i = 1, 98 do
 		local button = _G['ReagentBankFrameItem' .. i]
@@ -519,12 +581,14 @@ local function Stuffing_CreateReagentContainer()
 		button.IconBorder:SetAlpha(0)
 
 		button:ClearAllPoints()
-		button:SetSize(C['bags']['ButtonSize'], C['bags']['ButtonSize'])
+		button:SetSize(C['bags'].ButtonSize, C['bags'].ButtonSize)
 
 		local _, _, _, quality = GetContainerItemInfo(-3, i)
 		local clink = GetContainerItemLink(-3, i)
 		if clink then
-			if quality and quality > 1 then button:SetBackdropBorderColor(GetItemQualityColor(quality)) end
+			if quality and quality > 1 then
+				button:SetBackdropBorderColor(GetItemQualityColor(quality))
+			end
 		end
 
 		if i == 1 then
@@ -532,14 +596,14 @@ local function Stuffing_CreateReagentContainer()
 			LastRowButton = button
 			LastButton = button
 		elseif NumButtons == C['bags'].BankColumns then
-			button:SetPoint('TOPRIGHT', LastRowButton, 'TOPRIGHT', 0, -(C['bags']['ButtonSpace'] + C['bags']['ButtonSize']))
-			button:SetPoint('BOTTOMLEFT', LastRowButton, 'BOTTOMLEFT', 0, -(C['bags']['ButtonSpace'] + C['bags']['ButtonSize']))
+			button:SetPoint('TOPRIGHT', LastRowButton, 'TOPRIGHT', 0, -(C['bags'].ButtonSpace + C['bags'].ButtonSize))
+			button:SetPoint('BOTTOMLEFT', LastRowButton, 'BOTTOMLEFT', 0, -(C['bags'].ButtonSpace + C['bags'].ButtonSize))
 			LastRowButton = button
 			NumRows = NumRows + 1
 			NumButtons = 1
 		else
-			button:SetPoint('TOPRIGHT', LastButton, 'TOPRIGHT', (C['bags']['ButtonSpace'] + C['bags']['ButtonSize']), 0)
-			button:SetPoint('BOTTOMLEFT', LastButton, 'BOTTOMLEFT', (C['bags']['ButtonSpace'] + C['bags']['ButtonSize']), 0)
+			button:SetPoint('TOPRIGHT', LastButton, 'TOPRIGHT', (C['bags'].ButtonSpace + C['bags'].ButtonSize), 0)
+			button:SetPoint('BOTTOMLEFT', LastButton, 'BOTTOMLEFT', (C['bags'].ButtonSpace + C['bags'].ButtonSize), 0)
 			NumButtons = NumButtons + 1
 		end
 
@@ -549,9 +613,11 @@ local function Stuffing_CreateReagentContainer()
 		count:SetFont(C['media']['font'], 11, 'THINOUTLINE')
 		count:SetPoint('BOTTOMRIGHT', 1, 1)
 
-		if (LastButton ~= button) then LastButton = button end
+		if (LastButton ~= button) then
+			LastButton = button
+		end
 	end
-	Reagent:SetHeight(((C['bags']['ButtonSize'] + C['bags']['ButtonSpace']) * (NumRows + 1) + 40) - C['bags']['ButtonSpace'])
+	Reagent:SetHeight(((C['bags'].ButtonSize + C['bags'].ButtonSpace) * (NumRows + 1) + 40) - C['bags'].ButtonSpace)
 
 	MoneyFrame_Update(ReagentBankFrame.UnlockInfo.CostMoneyFrame, GetReagentBankCost())
 	ReagentBankFrameUnlockInfo:StripTextures()
@@ -563,7 +629,9 @@ end
 
 function Stuffing:BagFrameSlotNew(p, slot)
 	for _, v in ipairs(self.bagframe_buttons) do
-		if v.slot == slot then return v, false end
+		if v.slot == slot then
+			return v, false
+		end
 	end
 
 	local ret = {}
@@ -577,18 +645,25 @@ function Stuffing:BagFrameSlotNew(p, slot)
 		ret.frame:SetID(slot)
 
 		hooksecurefunc(ret.frame.IconBorder, 'SetVertexColor', function(self, r, g, b)
-			if r ~= 0.65882 and g ~= 0.65882 and b ~= 0.65882 then self:GetParent():SetBackdropBorderColor(r, g, b) end
+			if r ~= 0.65882 and g ~= 0.65882 and b ~= 0.65882 then
+				self:GetParent():SetBackdropBorderColor(r, g, b)
+			end
+
 			self:SetTexture('')
 		end)
 
-		hooksecurefunc(ret.frame.IconBorder, 'Hide', function(self) self:GetParent():SetBackdropBorderColor(unpack(C['general']['bordercolor'])) end)
+		hooksecurefunc(ret.frame.IconBorder, 'Hide', function(self)
+			self:GetParent():SetBackdropBorderColor(unpack(C['general']['bordercolor']))
+		end)
 
 		table_insert(self.bagframe_buttons, ret)
 
 		BankFrameItemButton_Update(ret.frame)
 		BankFrameItemButton_UpdateLocked(ret.frame)
 
-		if not ret.frame.tooltipText then ret.frame.tooltipText = '' end
+		if not ret.frame.tooltipText then
+			ret.frame.tooltipText = ''
+		end
 
 		if slot > GetNumBankSlots() then
 			SetItemButtonTextureVertexColor(ret.frame, 1.0, 0.1, 0.1)
@@ -600,11 +675,16 @@ function Stuffing:BagFrameSlotNew(p, slot)
 		Mixin(ret.frame, BackdropTemplateMixin)
 
 		hooksecurefunc(ret.frame.IconBorder, 'SetVertexColor', function(self, r, g, b)
-			if r ~= 0.65882 and g ~= 0.65882 and b ~= 0.65882 then self:GetParent():SetBackdropBorderColor(r, g, b) end
+			if r ~= 0.65882 and g ~= 0.65882 and b ~= 0.65882 then
+				self:GetParent():SetBackdropBorderColor(r, g, b)
+			end
+
 			self:SetTexture('')
 		end)
 
-		hooksecurefunc(ret.frame.IconBorder, 'Hide', function(self) self:GetParent():SetBackdropBorderColor(unpack(C['general']['bordercolor'])) end)
+		hooksecurefunc(ret.frame.IconBorder, 'Hide', function(self)
+			self:GetParent():SetBackdropBorderColor(unpack(C['general']['bordercolor']))
+		end)
 
 		ret.slot = slot
 		table_insert(self.bagframe_buttons, ret)
@@ -630,7 +710,9 @@ function Stuffing:SlotNew(bag, slot)
 
 	local tpl = 'ContainerFrameItemButtonTemplate'
 
-	if bag == -1 then tpl = 'BankItemButtonGenericTemplate' end
+	if bag == -1 then
+		tpl = 'BankItemButtonGenericTemplate'
+	end
 
 	local ret = {}
 
@@ -672,7 +754,7 @@ function Stuffing:SlotNew(bag, slot)
 		ret.count:SetShadowOffset(0, 0)
 		ret.count:SetPoint('BOTTOMRIGHT', 1, 1)
 
-		if C['bags']['ItemLevel'] == true then
+		if C['bags'].ItemLevel == true then
 			ret.frame.text = ret.frame:CreateFontString(nil, 'OVERLAY')
 			ret.frame.text:SetPoint('BOTTOMLEFT', 1, -1)
 			ret.frame.text:SetFont(C['media']['font'], 11, 'THINOUTLINE')
@@ -711,7 +793,9 @@ function Stuffing:SlotNew(bag, slot)
 		end
 
 		local Battlepay = _G[ret.frame:GetName()].BattlepayItemTexture
-		if Battlepay then Battlepay:SetAlpha(0) end
+		if Battlepay then
+			Battlepay:SetAlpha(0)
+		end
 	end
 
 	ret.bag = bag
@@ -779,7 +863,9 @@ function Stuffing:SearchUpdate(str)
 	str = string.lower(str)
 
 	for _, b in ipairs(self.buttons) do
-		if b.frame and not b.name then b.frame:SetAlpha(0.2) end
+		if b.frame and not b.name then
+			b.frame:SetAlpha(0.2)
+		end
 
 		if b.name then
 			local _, setName = GetContainerItemEquipmentSetInfo(b.bag, b.slot)
@@ -792,12 +878,16 @@ function Stuffing:SearchUpdate(str)
 			equipSlot = _G[equipSlot] or ''
 
 			if not string.find(string.lower(b.name), str) and not string.find(string.lower(setName), str) and not string.find(string.lower(class), str) and not string.find(string.lower(subclass), str) and not string.find(string.lower(equipSlot), str) then
-				if IsItemUnusable(b.name) or minLevel > D['Level'] then _G[b.frame:GetName() .. 'IconTexture']:SetVertexColor(0.5, 0.5, 0.5) end
+				if IsItemUnusable(b.name) or minLevel > D['Level'] then
+					_G[b.frame:GetName() .. 'IconTexture']:SetVertexColor(0.5, 0.5, 0.5)
+				end
 
 				SetItemButtonDesaturated(b.frame, true)
 				b.frame:SetAlpha(0.2)
 			else
-				if IsItemUnusable(b.name) or minLevel > D['Level'] then _G[b.frame:GetName() .. 'IconTexture']:SetVertexColor(1, 0.1, 0.1) end
+				if IsItemUnusable(b.name) or minLevel > D['Level'] then
+					_G[b.frame:GetName() .. 'IconTexture']:SetVertexColor(1, 0.1, 0.1)
+				end
 
 				SetItemButtonDesaturated(b.frame, false)
 				b.frame:SetAlpha(1)
@@ -808,7 +898,9 @@ end
 
 function Stuffing:SearchReset()
 	for _, b in ipairs(self.buttons) do
-		if IsItemUnusable(b.name) or (b.level and b.level > D['Level']) then _G[b.frame:GetName() .. 'IconTexture']:SetVertexColor(1, 0.1, 0.1) end
+		if IsItemUnusable(b.name) or (b.level and b.level > D['Level']) then
+			_G[b.frame:GetName() .. 'IconTexture']:SetVertexColor(1, 0.1, 0.1)
+		end
 
 		b.frame:SetAlpha(1)
 		SetItemButtonDesaturated(b.frame, false)
@@ -819,7 +911,11 @@ local function DragFunction(self, mode)
 	for index = 1, select('#', self:GetChildren()) do
 		local frame = select(index, self:GetChildren())
 		if frame:GetName() and frame:GetName():match('StuffingBag') then
-			if mode then frame:Hide() else frame:Show() end
+			if mode then
+				frame:Hide()
+			else
+				frame:Show()
+			end
 		end
 	end
 end
@@ -846,7 +942,9 @@ function Stuffing:CreateBagFrame(w)
 	end)
 
 	f:SetScript('OnEnter', function(self)
-		if GameTooltip:IsForbidden() then return end
+		if GameTooltip:IsForbidden() then
+			return
+		end
 
 		GameTooltip:SetOwner(self, 'ANCHOR_TOPLEFT', 0, 4)
 		GameTooltip:ClearLines()
@@ -856,7 +954,9 @@ function Stuffing:CreateBagFrame(w)
 	end)
 
 	f:SetScript('OnLeave', function()
-		if not GameTooltip:IsForbidden() then GameTooltip:Hide() end
+		if not GameTooltip:IsForbidden() then
+			GameTooltip:Hide()
+		end
 	end)
 
 	if w == 'Bank' then
@@ -971,13 +1071,21 @@ function Stuffing:CreateBagFrame(w)
 		f.purchaseBagButton:SetScript('OnClick', function()
 			local numSlots, full = GetNumBankSlots()
 
-			if (full) then StaticPopup_Show('CANNOT_BUY_BANK_SLOT') else StaticPopup_Show('BUY_BANK_SLOT') end
+			if (full) then
+				StaticPopup_Show('CANNOT_BUY_BANK_SLOT')
+			else
+				StaticPopup_Show('BUY_BANK_SLOT')
+			end
 
 			local button
 			for i = 1, NUM_BANKBAGSLOTS, 1 do
 				button = _G['StuffingBBag'..i..'Slot']
 				if button then
-					if i <= numSlots then SetItemButtonTextureVertexColor(button, 1.0, 1.0, 1.0) else SetItemButtonTextureVertexColor(button, 1.0, 0.1, 0.1) end
+					if i <= numSlots then
+						SetItemButtonTextureVertexColor(button, 1.0, 1.0, 1.0)
+					else
+						SetItemButtonTextureVertexColor(button, 1.0, 0.1, 0.1)
+					end
 				end
 			end
 		end)
@@ -987,7 +1095,9 @@ function Stuffing:CreateBagFrame(w)
 	f.b_close:SetPoint('TOPRIGHT', -2, 1)
 	f.b_close:SkinCloseButton()
 	f.b_close:RegisterForClicks('AnyUp')
-	f.b_close:SetScript('OnClick', function(self) self:GetParent():Hide() end)
+	f.b_close:SetScript('OnClick', function(self)
+		self:GetParent():Hide()
+	end)
 
 	local fb = CreateFrame('Frame', n .. 'BagsFrame', f)
 	fb:SetPoint('BOTTOMLEFT', f, 'TOPLEFT', 0, 6)
@@ -998,7 +1108,9 @@ function Stuffing:CreateBagFrame(w)
 end
 
 function Stuffing:InitBank()
-	if self.bankFrame then return end
+	if self.bankFrame then
+		return
+	end
 
 	local f = self:CreateBagFrame('Bank')
 	f:SetScript('OnHide', StuffingBank_OnHide)
@@ -1006,7 +1118,9 @@ function Stuffing:InitBank()
 end
 
 function Stuffing:InitBags()
-	if self.frame then return end
+	if self.frame then
+		return
+	end
 
 	self.buttons = {}
 	self.bags = {}
@@ -1029,7 +1143,9 @@ function Stuffing:InitBags()
 	end
 
 	local function updateSearch(self, t)
-		if t == true then Stuffing:SearchUpdate(self:GetText()) end
+		if t == true then
+			Stuffing:SearchUpdate(self:GetText())
+		end
 	end
 
 	editbox:SetScript('OnEscapePressed', resetAndClear)
@@ -1058,7 +1174,9 @@ function Stuffing:InitBags()
 	gold:SetAllPoints(gold.text)
 
 	local function OnGoldEvent(self)
-		if not _G.IsLoggedIn() then return end
+		if not _G.IsLoggedIn() then
+			return
+		end
 
 		if not Ticker then
 			C_WowTokenPublic.UpdateMarketPrice()
@@ -1312,7 +1430,7 @@ function Stuffing:Layout(isBank)
 		self.bankFrame:SetAlpha(1)
 	else
 		bs = BAGS_BACKPACK
-		cols = C['bags']['BagColumns']
+		cols = C['bags'].BagColumns
 		f = self.frame
 
 		f.editbox:SetFont(C['media']['font'], 11, 'THINOUTLINE')
@@ -1330,7 +1448,7 @@ function Stuffing:Layout(isBank)
 		fb:SetClampedToScreen(1)
 		fb:SetTemplate('Transparent')
 
-		local bsize = C['bags']['ButtonSize']
+		local bsize = C['bags'].ButtonSize
 		local w = 2 * 8
 
 		w = w + ((#bs - 1) * bsize)
@@ -1346,7 +1464,7 @@ function Stuffing:Layout(isBank)
 	local idx = 0
 	for _, v in ipairs(bs) do
 		if (not isBank and v <= 3) or (isBank and v ~= -1) then
-			local bsize = C['bags']['ButtonSize']
+			local bsize = C['bags'].ButtonSize
 			local b = self:BagFrameSlotNew(fb, v)
 			local xoff = 8
 
@@ -1361,7 +1479,7 @@ function Stuffing:Layout(isBank)
 			b.frame:HookScript('OnEnter', function(self)
 				local bag
 				if isBank then bag = v else bag = v + 1 end
-				for _, val in ipairs(btns) do 
+				for _, val in ipairs(btns) do
 					if val.bag == bag then val.frame:SetAlpha(1) else val.frame:SetAlpha(0.2) end
 				end
 			end)
@@ -1386,8 +1504,8 @@ function Stuffing:Layout(isBank)
 	rows = math_floor(slots / cols)
 	if (slots % cols) ~= 0 then rows = rows + 1 end
 
-	f:SetWidth(cols * C['bags']['ButtonSize'] + (cols - 1) * C['bags']['ButtonSpace'] + 10 * 2)
-	f:SetHeight(rows * C['bags']['ButtonSize'] + (rows - 1) * C['bags']['ButtonSpace'] + off + 10 * 2)
+	f:SetWidth(cols * C['bags'].ButtonSize + (cols - 1) * C['bags'].ButtonSpace + 10 * 2)
+	f:SetHeight(rows * C['bags'].ButtonSize + (rows - 1) * C['bags'].ButtonSpace + off + 10 * 2)
 
 	local idx = 0
 	for _, i in ipairs(bs) do
@@ -1407,13 +1525,13 @@ function Stuffing:Layout(isBank)
 
 				if isnew then table_insert(self.buttons, idx + 1, b) end
 
-				xoff = 10 + (x * C['bags']['ButtonSize']) + (x * C['bags']['ButtonSpace'])
-				yoff = off + 10 + (y * C['bags']['ButtonSize']) + ((y) * C['bags']['ButtonSpace'])
+				xoff = 10 + (x * C['bags'].ButtonSize) + (x * C['bags'].ButtonSpace)
+				yoff = off + 10 + (y * C['bags'].ButtonSize) + ((y) * C['bags'].ButtonSpace)
 				yoff = yoff * -1
 
 				b.frame:ClearAllPoints()
 				b.frame:SetPoint('TOPLEFT', f, 'TOPLEFT', xoff, yoff)
-				b.frame:SetSize(C['bags']['ButtonSize'], C['bags']['ButtonSize'])
+				b.frame:SetSize(C['bags'].ButtonSize, C['bags'].ButtonSize)
 				b.frame.lock = false
 				b.frame:SetAlpha(1)
 
