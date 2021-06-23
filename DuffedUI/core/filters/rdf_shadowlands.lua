@@ -57,6 +57,29 @@ D['DebuffIds'] = {
 	[GetSpellInfo(322773)] = 3, -- Blood Barrier
 
 	--Shadowlands Dungeons & Raids
+	-- Tazavesh, the Veiled Market
+	[GetSpellInfo(350804)] = 3, -- Collapsing Energy
+	[GetSpellInfo(350885)] = 3, -- Hyperlight Jolt
+	[GetSpellInfo(351101)] = 3, -- Energy Fragmentation
+	[GetSpellInfo(346828)] = 3, -- Sanitizing Field
+	[GetSpellInfo(355641)] = 3, -- Scintillate
+	[GetSpellInfo(355451)] = 3, -- Undertow
+	[GetSpellInfo(355581)] = 3, -- Crackle
+	[GetSpellInfo(349999)] = 3, -- Anima Detonation
+	[GetSpellInfo(346961)] = 3, -- Purging Field
+	[GetSpellInfo(351956)] = 3, -- High-Value Target
+	[GetSpellInfo(346297)] = 3, -- Unstable Explosion
+	[GetSpellInfo(347728)] = 3, -- Flock!
+	[GetSpellInfo(356408)] = 3, -- Ground Stomp
+	[GetSpellInfo(347744)] = 3, -- Quickblade
+	[GetSpellInfo(347481)] = 3, -- Shuri
+	[GetSpellInfo(355915)] = 3, -- Glyph of Restraint
+	[GetSpellInfo(350134)] = 3, -- Infinite Breath
+	[GetSpellInfo(350013)] = 3, -- Gluttonous Feast
+	[GetSpellInfo(355465)] = 3, -- Boulder Throw
+	[GetSpellInfo(346116)] = 3, -- Shearing Swings
+	[GetSpellInfo(356011)] = 3, -- Beam Splicer
+
 	-- Halls of Atonement
 	[GetSpellInfo(335338)] = 3, -- Ritual of Woe
 	[GetSpellInfo(326891)] = 3, -- Anguish
@@ -275,4 +298,33 @@ D['DebuffIds'] = {
 	[GetSpellInfo(329951)] = 3, -- Impale
 	[GetSpellInfo(327039)] = 3, -- Feeding Time
 	[GetSpellInfo(332794)] = 3, -- Fatal Finesse
+	
+	-- Sanctum of Domination
+	-- The Tarragrue
+	[GetSpellInfo(347283)] = 3, -- Predator's Howl
+	[GetSpellInfo(347286)] = 3, -- Unshakeable Dread
+	[GetSpellInfo(346986)] = 3, -- Crushed Armor
+	[GetSpellInfo(347991)] = 3, -- Ten of Towers
+	[GetSpellInfo(347269)] = 3, -- Chains of Eternity
+	[GetSpellInfo(346985)] = 3, -- Overpower
+	[GetSpellInfo(347274)] = 3, -- Annihilating Smash
+
+	-- Eye of the Jailer
+	[GetSpellInfo(350606)] = 3, -- Hopeless Lethargy
+	[GetSpellInfo(355240)] = 3, -- Scorn
+	[GetSpellInfo(355245)] = 3, -- Ire
+	[GetSpellInfo(349979)] = 3, -- Dragging Chains
+	[GetSpellInfo(348074)] = 3, -- Assailing Lance
+	[GetSpellInfo(351827)] = 3, -- Spreading Misery
+	[GetSpellInfo(355143)] = 3, -- Deathlink
+	[GetSpellInfo(350763)] = 3, -- Annihilating Glare
+
+	-- The Nine
+	-- Remnant of Ner'zhul
+	-- Soulrender Dormazain
+	-- Painsmith Raznal
+	-- Guardian of the First Ones
+	-- Fatescribe Roh-Kalo
+	-- Kel'Thuzad
+	-- Sylvanas Windrunner
 }
