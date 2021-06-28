@@ -20,6 +20,8 @@ local ChangeLogData = {
 		"- Removed scripts for master loot and roll frame",
 		"- Bugfixes",
 		"- Ignore item level on gems by Rav99",
+		"- Raid debuffs for raid Sanctum of Domination by Rav99",
+		"- Mythic+ Score on tooltip by Rav99",
 	" ",
 	"Important:",
 		"Please Report all bugs on the issue tracker => |cffC41F3Bhttps://github.com/liquidbase/DuffedUIv9/issues|r",
