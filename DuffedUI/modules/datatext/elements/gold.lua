@@ -164,7 +164,8 @@ local OnEnter = function(self)
 	D['Currency'](1885) -- Grateful Offering
 	D['Currency'](1906) -- Soul Cinders
 	D['Currency'](1904) -- Tower Knowledge
-	
+	D['Currency'](1931) -- Cataloged Research
+	D['Currency'](1977) -- Stygian Ember	
 
 	if ImprovedCurrency['PvP'] then
 		GameTooltip:AddLine(' ')
