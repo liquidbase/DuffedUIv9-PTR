@@ -165,7 +165,7 @@ f.TopVersusText:SetPoint('TOP', f, 'TOP', 0, -46)
 local tooltips = {PetBattlePrimaryAbilityTooltip, PetBattlePrimaryUnitTooltip, FloatingBattlePetTooltip, BattlePetTooltip , FloatingPetBattleAbilityTooltip}
 
 for i, tt in pairs(tooltips) do
-	tt.Background:SetTexture(nil)
+	Mixin(tt, BackdropTemplateMixin)
 	
 	if tt.Delimiter1 then
 		tt.Delimiter1:SetTexture(nil)
@@ -174,14 +174,6 @@ for i, tt in pairs(tooltips) do
 		tt.Delimiter:SetTexture(nil)
 	end
 	
-	tt.BorderTop:SetTexture(nil)
-	tt.BorderTopLeft:SetTexture(nil)
-	tt.BorderTopRight:SetTexture(nil)
-	tt.BorderLeft:SetTexture(nil)
-	tt.BorderRight:SetTexture(nil)
-	tt.BorderBottom:SetTexture(nil)
-	tt.BorderBottomRight:SetTexture(nil)
-	tt.BorderBottomLeft:SetTexture(nil)
 	tt:SetTemplate('Transparent')
 	end
 
@@ -247,7 +239,7 @@ local bar = CreateFrame('Frame', 'DuffedUIPetBattleActionBar', UIParent, 'Secure
 bar:SetSize (52 * 6 + 7 * 10, 52 * 1 + 10 * 2)
 bar:EnableMouse(true)
 bar:SetTemplate()
-bar:SetPoint('BOTTOM', UIParent, 'BOTTOM', 0, 50)
+bar:SetPoint('BOTTOM', UIParent, 'BOTTOM', 0, 17)
 bar:Hide()
 move:RegisterFrame(DuffedUIPetBattleActionBar)
 RegisterStateDriver(bar, 'visibility', '[petbattle] show; hide')
