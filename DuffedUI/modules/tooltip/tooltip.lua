@@ -697,6 +697,7 @@ end
 function Module:SetStyle(tt)
 	if not tt or tt:IsForbidden() then return end
 	
+	Mixin(tt, BackdropTemplateMixin)
 	tt:SetBackdrop({
 		bgFile = C['media']['blank'],
 		edgeFile = C['media']['blank'],
