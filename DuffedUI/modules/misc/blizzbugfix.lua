@@ -80,12 +80,149 @@ function Module:BuyMaxStacks()
 	end
 end
 
+-- Instant drop domi gems, choose domigems per click *** Siweia you rock!***
+function Module:DomiExtractor()
+	local EXTRACTOR_ID = 187532
+	local Module_Tooltip = D:GetModule('TooltipDomiRanks')
+
+	local function TryOnShard(self)
+		if not self.itemLink then return end
+
+		PickupContainerItem(self.bagID, self.slotID)
+		ClickSocketButton(1)
+		ClearCursor()
+	end
+
+	local function ShowShardTooltip(self)
+		if not self.itemLink then return end
+
+		GameTooltip:ClearLines()
+		GameTooltip:SetOwner(self, 'ANCHOR_TOPLEFT')
+		GameTooltip:SetHyperlink(self.itemLink)
+		GameTooltip:Show()
+	end
+
+	local foundShards = {}
+	local function RefreshShardsList()
+		wipe(foundShards)
+
+		for bagID = 0, 4 do
+			for slotID = 1, GetContainerNumSlots(bagID) do
+				local _, _, _, _, _, _, itemLink, _, _, itemID = GetContainerItemInfo(bagID, slotID)
+				local rank = itemID and Module_Tooltip.DomiRankData[itemID]
+				if rank then
+					local index = Module_Tooltip.DomiIndexData[itemID]
+					if not index then break end
+
+					local button = Module.DomiShardsFrame.icons[index]
+					button.bagID = bagID
+					button.slotID = slotID
+					button.itemLink = itemLink
+					button.count:SetText(rank)
+					button.Icon:SetDesaturated(false)
+
+					foundShards[index] = true
+				end
+			end
+		end
+
+		for index, button in pairs(Module.DomiShardsFrame.icons) do
+			if not foundShards[index] then
+				button.itemLink = nil
+				button.count:SetText('')
+				button.Icon:SetDesaturated(true)
+			end
+		end
+	end
+
+	local iconSize = 28
+	local frameSize = iconSize * 3
+
+	local function CreateDomiShards()
+		local frame = CreateFrame('Frame', 'DuffedUI_DomiShards', ItemSocketingFrame)
+		frame:SetSize(frameSize, frameSize)
+		frame:SetPoint("BOTTOMLEFT", 22, 3)
+		frame.icons = {}
+
+		Module.DomiShardsFrame = frame
+
+		for index, value in pairs(Module_Tooltip.DomiDataByGroup) do
+			for itemID in pairs(value) do
+				local button = CreateFrame('Button', nil, frame)
+				button:SetSize(iconSize, iconSize)
+				button:SetPoint("TOPLEFT", mod(index - 1, 3) * iconSize, - floor((index - 1) / 3) * iconSize)
+				
+				if not button.IsSkinned then
+					button:CreateBackdrop()
+					button:StyleButton()
+					button.backdrop:SetFrameLevel(button:GetFrameLevel() - 1)				
+					button.Icon = button:CreateTexture(nil, 'ARTWORK')
+					button.Icon:SetTexture(GetItemIcon(itemID))
+					button.Icon:SetAllPoints()
+					button.Icon:SetTexCoord(unpack(D['IconCoord']))
+					button.Icon:SetInside(button.Backdrop)
+					button.IsSkinned = true
+				end
+
+				button:SetScript('OnClick', TryOnShard)
+				button:SetScript('OnLeave', D['HideTooltip'])
+				button:SetScript('OnEnter', ShowShardTooltip)
+
+				button.count = D['SetFontString'](button, C['media']['font'], 11, 'THINOUTLINE', 'system', 'BOTTOMRIGHT', 0, -0) 
+
+				frame.icons[index] = button
+				break
+			end
+		end
+
+		RefreshShardsList()
+		D:RegisterEvent('BAG_UPDATE', RefreshShardsList)
+	end
+
+	local function CreateExtractButton()
+		if not ItemSocketingFrame then return end
+		if Module.DomiExtButton then return end
+		if GetItemCount(EXTRACTOR_ID) == 0 then return end
+		if IsAddOnLoaded('Aurora') then F = unpack(Aurora) end
+
+		ItemSocketingSocketButton:SetWidth(80)
+
+		if InCombatLockdown() then return end
+
+		local button = CreateFrame('Button', 'DuffedUI_ExtractorButton', ItemSocketingFrame, 'UIPanelButtonTemplate, SecureActionButtonTemplate')
+		button:SetSize(80, 22)
+		button:SetText(REMOVE)
+		button:SetPoint('RIGHT', ItemSocketingSocketButton, 'LEFT', -2, 0)
+		button:SetAttribute('type', 'macro')
+		button:SetAttribute('macrotext', '/use item:'..EXTRACTOR_ID..'\n/click ItemSocketingSocket1')
+		
+		if IsAddOnLoaded('Aurora') then F.Reskin(button) end
+
+		CreateDomiShards()
+
+		Module.DomiExtButton = button
+	end
+
+	hooksecurefunc('ItemSocketingFrame_LoadUI', function()
+		CreateExtractButton()
+
+		if Module.DomiExtButton then
+			Module.DomiExtButton:SetAlpha(GetSocketTypes(1) == 'Domination' and GetExistingSocketInfo(1) and 1 or 0)
+		end
+
+		if Module.DomiShardsFrame then
+			Module.DomiShardsFrame:SetShown(GetSocketTypes(1) == 'Domination' and not GetExistingSocketInfo(1))
+		end
+	end)
+end
+
 function Module:OnEnable()
 	-- Fix Spellbook Taint
 	ShowUIPanel(SpellBookFrame)
 	HideUIPanel(SpellBookFrame)
 	
 	self:BuyMaxStacks()
+	self:DomiExtractor()
 	self:MisclickPopups()
 	
 	hooksecurefunc(StaticPopupDialogs['DELETE_GOOD_ITEM'], 'OnShow', function(self) self.editBox:SetText(DELETE_ITEM_CONFIRM_STRING) end)

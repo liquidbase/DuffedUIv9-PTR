@@ -93,6 +93,7 @@ local function updateStatus()
 			restedxpBar:SetHeight(barHeight)
 			repBar:SetHeight(2)
 			repBar:Show()
+			repBar:SetFrameLevel(xpBar:GetFrameLevel() + 2)
 		else
 			xpBar:SetHeight(barHeight)
 			restedxpBar:SetHeight(barHeight)

@@ -1,6 +1,5 @@
 local D, C = unpack(select(2, ...))
 local Module = D:NewModule('SlotItemLevel', 'AceEvent-3.0', 'AceHook-3.0')
-local ModuleTooltip = D:GetModule('TooltipAzerite')
 
 local _G = _G
 local next = _G.next
@@ -121,33 +120,6 @@ local function GetSlotItemLocation(id)
 	return itemLocation
 end
 
-function Module:ItemLevel_UpdateTraits(button, id, link)
-	local empoweredItemLocation = GetSlotItemLocation(id)
-	if not empoweredItemLocation then return end
-
-	local allTierInfo = D:GetModule('TooltipAzerite'):Azerite_UpdateTier(link)
-	if not allTierInfo then return end
-
-	for i = 1, 2 do
-		if not powerIDs then return end
-		local powerIDs = allTierInfo[i].azeritePowerIDs
-		if not powerIDs or powerIDs[1] == 13 then break end
-
-		for _, powerID in pairs(powerIDs) do
-			local selected = C_AzeriteEmpoweredItem_IsPowerSelected(empoweredItemLocation, powerID)
-			if selected then
-				local spellID = D:GetModule('TooltipAzerite'):Azerite_PowerToSpell(powerID)
-				local name, _, icon = GetSpellInfo(spellID)
-				local texture = button['textureIcon'..i]
-				if name and texture then
-					texture:SetTexture(icon)
-					texture.bg:Show()
-				end
-			end
-		end
-	end
-end
-
 function Module:ItemLevel_SetupLevel(frame, strType, unit)
 	if not UnitExists(unit) then return end
 
@@ -208,8 +180,6 @@ function Module:ItemLevel_SetupLevel(frame, strType, unit)
 						end
 					end
 				end
-
-				if strType == 'Character' then Module:ItemLevel_UpdateTraits(slotFrame, index, link) end
 			end
 		end
 	end

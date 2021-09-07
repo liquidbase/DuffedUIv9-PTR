@@ -198,16 +198,6 @@ DuffedUIConfig['itIT'] = {
 		},
 	},
 
-	['loot'] = {
-		['lootframe'] = {
-			['Name'] = '|cffC41F3BDuffedUI|r Loot frame',
-		},
-
-		['rolllootframe'] = {
-			['Name'] = '|cffC41F3BDuffedUI|r Roll frame',
-		},
-	},
-
 	['merchant'] = {
 		['sellgrays'] = {
 			['Name'] = 'Automatically sell gray items',
@@ -583,6 +573,10 @@ DuffedUIConfig['itIT'] = {
 
 		['mawbar'] = {
 			['Name'] = 'Show Mawbar',
+		},
+		
+		['GarrisonButton'] = {
+			['Name'] = 'Enable button for ' .. GARRISON_LANDING_PAGE_TITLE,
 		},
 	},
 		

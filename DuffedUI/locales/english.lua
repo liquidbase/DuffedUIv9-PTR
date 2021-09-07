@@ -283,6 +283,8 @@ L['dt'] = {
 	['venthyr'] = '|cffff4040Venthyr|r',
 	['nightfae'] = '|cffa330c9Night Fae|r',
 	['necrolord'] = '|cff40bf40Necrolord|r',
+	['holdshift'] = 'Hold Shift:',
+	['showconduits'] = 'Show Conduitsinfo',
 }
 
 L['Slots'] = {

@@ -186,22 +186,13 @@ local menuList = {
 	end},
 	{text = "Switch Raidlayout", notCheckable = true, func = function()
 		if InCombatLockdown() then return end
+
 		if C['raid']['raidlayout']['Value'] == 'damage' then
-			if DuffedUIConfigPublic then
-				DuffedUIConfigPublic['raid']['raidlayout']['Value'] = 'heal'
-				ReloadUI()
-			else
-				DuffedUIConfigPrivate['raid']['raidlayout']['Value'] = 'heal'
-				ReloadUI()
-			end
-		else
-			if DuffedUIConfigPublic then
-				DuffedUIConfigPublic['raid']['raidlayout']['Value'] = 'damage'
-				ReloadUI()
-			else
-				DuffedUIConfigPrivate['raid']['raidlayout']['Value'] = 'damage'
-				ReloadUI()
-			end
+			D['SetConfigValue']('raid', 'raidlayout', 'Value', 'heal')
+			ReloadUI()
+		elseif C['raid']['raidlayout']['Value'] == 'heal' then
+			D['SetConfigValue']('raid', 'raidlayout', 'Value', 'damage')
+			ReloadUI()
 		end
 	end},
 	{text = "", notClickable = true, notCheckable = true},

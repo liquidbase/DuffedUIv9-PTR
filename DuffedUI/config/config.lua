@@ -47,7 +47,7 @@ C['unitframes'] = {
 	['grouptext'] = true,
 	['showrange'] = true,
 	['combatfade'] = false,
-	--['showsolo'] = false,
+	--['showsolo'] = true,
 	['style'] = {
 		['Options'] = {
 			['Unitframe-Style 1'] = 1,
@@ -237,6 +237,7 @@ C['misc'] = {
 	['gemenchantinfo'] = true,
 	['itemlevel'] = true,
 	['mawbar'] = true,
+	['GarrisonButton'] = false,
 }
 
 C['announcements'] = {
@@ -266,14 +267,11 @@ C['announcements'] = {
 	},
 }
 
-C['loot'] = {
-	['lootframe'] = true,
-	['rolllootframe'] = true,
-}
-
 C['tooltip'] = {
 	['AzeriteArmor'] = true,
+	['ConduitInfo'] = true,
 	['CursorAnchor'] = false,
+	['DomiRanks'] = true,
 	['Enable'] = true,
 	['GuildRanks'] = true,
 	['HealthbarHeight'] = 11,

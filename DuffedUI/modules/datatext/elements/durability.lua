@@ -2,6 +2,7 @@ local D, C, L = unpack(select(2, ...))
 
 local InCombatLockdown = InCombatLockdown
 local ToggleCharacter = ToggleCharacter
+local IsShiftKeyDown = IsShiftKeyDown
 
 local format = string.format
 local floor = math.floor
@@ -23,7 +24,6 @@ local OnEnter = function(self)
 	GameTooltip:SetOwner(self:GetTooltipAnchor())
 	GameTooltip:ClearLines()
 	GameTooltip:AddLine(ARMOR)
-	GameTooltip:AddLine(' ')
 
 	for i = 1, 11 do
 		if (L.Slots[i][3] ~= 1000) then
@@ -35,9 +35,14 @@ local OnEnter = function(self)
 			GameTooltip:AddDoubleLine(L['Slots'][i][2], floor(L['Slots'][i][3] * 100) .. '%', 1, 1, 1, Red + 1, Green, 0)
 		end
 	end
-	
+
+	if IsShiftKeyDown() then
+		D['DTConduit']()
+	end
+
 	GameTooltip:AddLine(' ')
 	GameTooltip:AddDoubleLine(KEY_BUTTON1..':', L['dt']['durabilityleft'], 1, 1, 1)
+	GameTooltip:AddDoubleLine(L['dt']['holdshift'], L['dt']['showconduits'], 1, 1, 1)
 	GameTooltip:Show()
 end
 
@@ -67,12 +72,15 @@ local function Update(self, event)
 	end
 
 	Total = 0
+
+	if event == 'MODIFIER_STATE_CHANGED' and not IsAltKeyDown() and GetMouseFocus() == self then OnEnter(self) end
 end
 
 local function Enable(self)
 	self:RegisterEvent('MERCHANT_SHOW')
 	self:RegisterEvent('PLAYER_ENTERING_WORLD')
 	self:RegisterEvent('UPDATE_INVENTORY_DURABILITY')
+	self:RegisterEvent('MODIFIER_STATE_CHANGED')
 	self:SetScript('OnEvent', Update)
 	self:SetScript('OnEnter', OnEnter)
 	self:SetScript('OnLeave', GameTooltip_Hide)

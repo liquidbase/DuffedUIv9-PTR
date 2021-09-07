@@ -193,7 +193,7 @@ move:RegisterFrame(bnet)
 QuickJoinToastButton.ClearAllPoints = BNToastFrame.ClearAllPoints
 QuickJoinToastButton.SetPoint = BNToastFrame.SetPoint
 QuickJoinToastButton:ClearAllPoints()
-QuickJoinToastButton:SetPoint('TOPLEFT', bnet, 'BOTTOMLEFT', 0, 0)
+QuickJoinToastButton:SetPoint('TOPLEFT', bnet, 'BOTTOMLEFT', 0, -31)
 QuickJoinToastButton.ClearAllPoints = function() end
 QuickJoinToastButton.SetPoint = function() end
 QuickJoinToastButton:SetAlpha(0)

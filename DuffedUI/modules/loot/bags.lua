@@ -1586,6 +1586,8 @@ function Stuffing:ADDON_LOADED(addon)
 	self:RegisterEvent('BAG_UPDATE_DELAYED')
 	self:RegisterEvent('SOULBIND_FORGE_INTERACTION_STARTED')
 	self:RegisterEvent('SOULBIND_FORGE_INTERACTION_ENDED')
+	self:RegisterEvent('ITEM_UPGRADE_MASTER_OPENED')
+	self:RegisterEvent('ITEM_UPGRADE_MASTER_CLOSED')
 
 	self:InitBags()
 
@@ -1699,8 +1701,9 @@ function Stuffing:GUILDBANKFRAME_CLOSED()
 end
 
 function Stuffing:SOULBIND_FORGE_INTERACTION_STARTED() Stuffing_Open() end
-
 function Stuffing:SOULBIND_FORGE_INTERACTION_ENDED() Stuffing_Close() end
+function Stuffing:ITEM_UPGRADE_MASTER_OPENED() Stuffing_Open() end
+function Stuffing:ITEM_UPGRADE_MASTER_CLOSED() Stuffing_Close() end
 
 function Stuffing:BAG_CLOSED(id)
 	local b = self.bags[id]
@@ -1741,8 +1744,8 @@ function Stuffing:SCRAPPING_MACHINE_SHOW()
 	for i = 0, #BAGS_BACKPACK - 1 do Stuffing:BAG_UPDATE(i) end
 end
 
-LootWonAlertFrame_OnClick = D['Noop']
-LootUpgradeFrame_OnClick = D['Noop']
-StorePurchaseAlertFrame_OnClick = D['Noop']
-LegendaryItemAlertFrame_OnClick = D['Noop']
-OpenAllBagsMatchingContext = D['Noop']
+LootWonAlertFrame_OnClick = D['Dummy']
+LootUpgradeFrame_OnClick = D['Dummy']
+StorePurchaseAlertFrame_OnClick = D['Dummy']
+LegendaryItemAlertFrame_OnClick = D['Dummy']
+OpenAllBagsMatchingContext = function() return 0 end

@@ -284,6 +284,8 @@ if D['Client'] == 'frFR' then
 		['venthyr'] = '|cffff4040Venthyrs|r',
 		['nightfae'] = '|cffa330c9Fae nocturnes|r',
 		['necrolord'] = '|cff40bf40Nécro-seigneurs|r',
+		['holdshift'] = 'Hold Shift:',
+		['showconduits'] = 'Show Conduitsinfo',
 	}
 
 	L['Slots'] = {

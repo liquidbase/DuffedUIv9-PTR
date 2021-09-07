@@ -633,7 +633,6 @@ D['ClassFilter'] = {
 			-- Assassination
 			D['CreateSpellEntry'](32645), -- Envenom
 			-- Outlaw
-			D['CreateSpellEntry'](5171), -- Slice and Dice
 			D['CreateSpellEntry'](13750), -- Adrenaline Rush
 			D['CreateSpellEntry'](13877), -- Blade Flurry
 			D['CreateSpellEntry'](51690), -- Killing Spree
@@ -643,6 +642,7 @@ D['ClassFilter'] = {
 			D['CreateSpellEntry'](195627), -- Opportunity
 			D['CreateSpellEntry'](199600), -- Buried Treasure
 			D['CreateSpellEntry'](199603), -- Jolly Roger
+			D['CreateSpellEntry'](315496), -- Slice and Dice
 			-- Subtlety
 			D['CreateSpellEntry'](31665), -- Master of Subtlety
 			D['CreateSpellEntry'](121471), -- Shadow Blades

@@ -404,3 +404,19 @@ D['CreateGF'] = function(self, w, h, o, r, g, b, a1, a2)
 end
 
 D['Print'] = function(...) print('|cffC41F3B'..D['Title']..'|r:', ...) end
+
+D['SetConfigValue'] = function(...)
+	local args = {...}
+	local num = #args
+	
+	local t = DuffedUIConfigPrivate
+	local i = num
+	for i=1,(num-2) do
+		local k = args[i]
+		if not t[k] then
+			t[k] = {}
+		end
+		t=t[k]
+	end
+	t[args[num-1]] = args[num]
+end

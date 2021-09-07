@@ -54,6 +54,7 @@
 	<Include file='modules\buffs\template.xml' />
 	<Script file='modules\buffs\buffs.lua' />
 	<Script file='modules\buffs\header.lua' />
+	<Script file='modules\asm\Shadowlands\dt_conduit.lua' />
 	<Include file='modules\datatext\load_dt.xml' />
 	<Include file='modules\actionbars\load_ab.xml' />
 	<Script file='modules\chat\chatbubbles.lua' />
@@ -66,7 +67,8 @@
 	<Script file='modules\chat\chatitemlevel.lua' />
 	<Script file='modules\chat\history.lua' />
 	<Script file='modules\tooltip\tooltip.lua' />
-	<Script file='modules\tooltip\tooltipazerite.lua' />
+	<Script file='modules\asm\Shadowlands\tooltipconduit.lua' />
+	<Script file='modules\asm\Shadowlands\tooltipdomiranks.lua' />
 	<Script file='modules\tooltip\tooltipicons.lua' />
 	<Script file='modules\loot\sort.lua' />
 	<Script file='modules\loot\bags.lua' />

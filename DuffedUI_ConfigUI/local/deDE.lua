@@ -197,16 +197,6 @@ DuffedUIConfig['deDE'] = {
 		},
 	},
 	
-	['loot'] = {
-		['lootframe'] = {
-			['Name'] = '|cffC41F3BDuffedUI|r Lootfenster',
-		},
-		
-		['rolllootframe'] = {
-			['Name'] = '|cffC41F3BDuffedUI|r Würfelfenster',
-		},
-	},
-
 	['merchant'] = {
 		['sellgrays'] = {
 			['Name'] = 'Graue Gegenstände automatisch verkaufen',
@@ -578,6 +568,10 @@ DuffedUIConfig['deDE'] = {
 
 		['mawbar'] = {
 			['Name'] = 'Schlundleiste anzeigen',
+		},
+
+		['GarrisonButton'] = {
+			['Name'] = 'Aktiviere Button für ' .. GARRISON_LANDING_PAGE_TITLE,
 		},
 	},
 	

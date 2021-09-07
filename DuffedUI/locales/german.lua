@@ -285,6 +285,8 @@ if D['Client'] == 'deDE' then
 		['venthyr'] = '|cffff4040Venthyr|r',
 		['nightfae'] = '|cffa330c9Nachtfae|r',
 		['necrolord'] = '|cff40bf40Nekrolords|r',
+		['holdshift'] = 'Shift halten:',
+		['showconduits'] = 'Conduitsinformationen anzeigen',
 	}
 
 	L['Slots'] = {

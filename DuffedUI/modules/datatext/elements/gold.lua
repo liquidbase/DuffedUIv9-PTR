@@ -323,7 +323,20 @@ end
 
 local OnLeave = function() GameTooltip:Hide() end
 
-local RightClickMenu = {
+local RightClickMenu1 = {
+	{ text = 'DuffedUI Improved Currency Options', isTitle = true , notCheckable = true },
+	{ text = 'Show Player vs Player Currency', checked = function() return ImprovedCurrency['PvP'] end, func = function()
+		if ImprovedCurrency['PvP'] then ImprovedCurrency['PvP'] = false else ImprovedCurrency['PvP'] = true end
+	end },
+	{ text = 'Show Archaeology Fragments', checked = function() return ImprovedCurrency['Archaeology'] end, func = function()
+		if ImprovedCurrency['Archaeology'] then ImprovedCurrency['Archaeology'] = false else ImprovedCurrency['Archaeology'] = true end
+	end },
+	{ text = 'Show Miscellaneous Currency', checked = function() return ImprovedCurrency['Miscellaneous'] end, func = function()
+		if ImprovedCurrency['Miscellaneous'] then ImprovedCurrency['Miscellaneous'] = false else ImprovedCurrency['Miscellaneous'] = true end
+	end },
+}
+
+local RightClickMenu2 = {
 	{ text = 'DuffedUI Improved Currency Options', isTitle = true , notCheckable = true },
 	{ text = 'Show currency from ' .. EXPANSION_NAME7, checked = function() return ImprovedCurrency[EXPANSION_NAME7] end, func = function()
 		if ImprovedCurrency[EXPANSION_NAME7] then ImprovedCurrency[EXPANSION_NAME7] = false else ImprovedCurrency[EXPANSION_NAME7] = true end
@@ -373,7 +386,11 @@ local OnMouseDown = function(self, btn)
 	elseif btn == 'LeftButton' then
 		ToggleAllBags()
 	else
-		EasyMenu(RightClickMenu, DuffedUIImprovedCurrencyDropDown, 'cursor', 0, 0, 'MENU', 2)
+		if C['datatext']['oldcurrency'] then
+			EasyMenu(RightClickMenu2, DuffedUIImprovedCurrencyDropDown, 'cursor', 0, 0, 'MENU', 2)
+		else
+			EasyMenu(RightClickMenu1, DuffedUIImprovedCurrencyDropDown, 'cursor', 0, 0, 'MENU', 2)
+		end
 	end
 end
 
@@ -383,7 +400,6 @@ local function Enable(self)
 	self:RegisterEvent('SEND_MAIL_COD_CHANGED')
 	self:RegisterEvent('PLAYER_TRADE_MONEY')
 	self:RegisterEvent('TRADE_MONEY_CHANGED')
-	--self:RegisterEvent('PLAYER_ENTERING_WORLD')
 	self:RegisterEvent('PLAYER_LOGIN')
 	self:SetScript('OnEvent', Update)
 	self:SetScript('OnMouseDown', OnMouseDown)

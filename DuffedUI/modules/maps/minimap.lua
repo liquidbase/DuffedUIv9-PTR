@@ -17,7 +17,17 @@ Minimap:SetParent(DuffedUIMinimap)
 Minimap:ClearAllPoints()
 Minimap:Point('TOPLEFT', 2, -2)
 Minimap:Point('BOTTOMRIGHT', -2, 2)
-GarrisonLandingPageMinimapButton:Kill()
+if C['misc']['GarrisonButton'] then
+	hooksecurefunc('GarrisonLandingPageMinimapButton_UpdateIcon', function(self)
+		GarrisonLandingPageMinimapButton:SetSize(30, 30)
+		GarrisonLandingPageMinimapButton:ClearAllPoints()
+		GarrisonLandingPageMinimapButton:Point('BOTTOM', MinimapToggleButton, 'TOP', 0, 0)
+		GarrisonLandingPageMinimapButton:SetFrameLevel(Minimap:GetFrameLevel() + 1)
+		GarrisonLandingPageMinimapButton:SetFrameStrata(Minimap:GetFrameStrata())
+	end)
+else
+	GarrisonLandingPageMinimapButton:Kill()
+end
 MinimapBorder:Hide()
 MinimapBorderTop:Hide()
 MinimapZoomIn:Hide()
