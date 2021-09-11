@@ -95,5 +95,9 @@ WorldFrame:HookScript('OnMouseDown', function(self, button)
 		local inParty = (GetNumGroupMembers() > 0)
 		local inRaid = (GetNumGroupMembers() > 0)
 		if (inRaid and (IsRaidLeader() or IsRaidOfficer()) or (inParty and not inRaid)) or (not inParty and not inRaid) then LEM:EasyMenu(menuList, menuFrame, 'cursor', 0, 0, 'MENU', nil) end
+		for i = 1, 2 do
+			local fmb = _G["L_DropDownList"..i].MenuBackdrop
+			fmb:CreateBackdrop('Default')
+		end
 	end
 end)

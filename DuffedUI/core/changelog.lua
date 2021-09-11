@@ -16,6 +16,7 @@ local ChangeLogData = {
 		"- Fixed borders for gametooltip",
 		"- Added LibDropDownMenu for custom menus",
 		"- Replaced EasyMenu with LEM:EasyMenu for better menu control",
+		"- Fixed frames for new EasyMenu (input provided by humfras)",
 		"- Bugfixes",
 	" ",
 	"Important:",

@@ -32,6 +32,10 @@ local menuList = {
 
 local OnMouseDown = function(self)
 	if btn == 'RightButton' then LEM:EasyMenu(menuList, menuFrame, 'cursor', 0, 0, 'MENU', 2) else ToggleChannelFrame() end
+	for i = 1, 2 do
+		local fmb = _G["L_DropDownList"..i].MenuBackdrop
+		fmb:CreateBackdrop('Default')
+	end
 end
 
 local OnLeave = function() GameTooltip:Hide() end

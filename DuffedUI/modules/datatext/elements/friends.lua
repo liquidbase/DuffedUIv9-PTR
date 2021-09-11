@@ -372,6 +372,11 @@ local function OnMouseDown(self, btn)
 		end
 
 		LEM:EasyMenu(menuList, menuFrame, 'cursor', 0, 0, 'MENU', 2)
+
+		for i = 1, 2 do
+			local fmb = _G["L_DropDownList"..i].MenuBackdrop
+			fmb:CreateBackdrop('Default')
+		end
 	else
 		ToggleFriendsFrame(1)
 	end

@@ -114,6 +114,10 @@ Minimap:SetScript('OnMouseUp', function(self, btn)
 		Minimap_OnClick(self)
 	end
 end)
+for i = 1, 2 do
+	local fmb = _G["L_DropDownList"..i].MenuBackdrop
+	fmb:CreateBackdrop('Default')
+end
 
 Minimap:EnableMouseWheel(true)
 Minimap:SetScript('OnMouseWheel', function(self, delta)

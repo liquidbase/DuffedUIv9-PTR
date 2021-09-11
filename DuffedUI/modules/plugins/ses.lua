@@ -20,8 +20,6 @@ end
 
 --local menuFrame = CreateFrame("Frame", "QuickClickMenu", UIParent, "UIDropDownMenuTemplate")
 local menuFrame = LEM:Create_UIDropDownMenu("QuickClickMenu", UIParent)
-menuFrame:CreateBackdrop()
-menuFrame:SetTemplate('Default')
 
 local LeftClickMenu = { }
 LeftClickMenu[1] = { text = L['dt']['specmenu'], isTitle = true, notCheckable = true}
@@ -222,3 +220,8 @@ toggle:SetScript('OnMouseDown', function(self)
 	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
 	LEM:EasyMenu(menuList, menuFrame, 'DuffedUI_Spechelper', 0, -150, 'MENU', 2)
 end)
+
+for i = 1, 2 do
+	local fmb = _G["L_DropDownList"..i].MenuBackdrop
+	fmb:CreateBackdrop('Default')
+end
