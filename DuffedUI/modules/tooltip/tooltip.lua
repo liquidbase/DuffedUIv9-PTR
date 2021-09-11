@@ -828,6 +828,7 @@ function Module:OnEnable()
 		GameTooltip,
 		StoryTooltip,
 		WarCampaignTooltip,
+		BattlePetTooltip,
 	}
 
 	local qualityTooltips = {

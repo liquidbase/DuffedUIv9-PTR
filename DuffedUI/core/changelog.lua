@@ -13,7 +13,7 @@ local CLOSE = _G.CLOSE
 local ChangeLogData = {
 	-- 115 chars per line
 	"Changes:",
-		"- Button for Garrisons Report added",
+		"- Fixed borders for gametooltip",
 		"- Bugfixes",
 	" ",
 	"Important:",
