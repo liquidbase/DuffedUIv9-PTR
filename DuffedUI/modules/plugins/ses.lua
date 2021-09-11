@@ -220,8 +220,3 @@ toggle:SetScript('OnMouseDown', function(self)
 	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
 	LEM:EasyMenu(menuList, menuFrame, 'DuffedUI_Spechelper', 0, -150, 'MENU', 2)
 end)
-
-for i = 1, 2 do
-	local fmb = _G["L_DropDownList"..i].MenuBackdrop
-	fmb:CreateBackdrop('Default')
-end

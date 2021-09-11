@@ -18,11 +18,6 @@ local function OnMouseDown(self)
 	LEM:EasyMenu(Menu, MenuFrame, 'cursor', 0, 0, 'MENU', 2)
 end
 
-for i = 1, 2 do
-	local fmb = _G["L_DropDownList"..i].MenuBackdrop
-	fmb:CreateBackdrop('Default')
-end
-
 function DataTexts:ToggleDataPositions()
 	if Active then
 		for i = 1, self.NumAnchors do

@@ -121,10 +121,6 @@ elseif D['Level'] > 35 then
 end
 
 local function OnMouseDown() LEM:EasyMenu(micromenu, menuFrame, 'cursor', 0, 0, 'MENU') end
-for i = 1, 2 do
-	local fmb = _G["L_DropDownList"..i].MenuBackdrop
-	fmb:CreateBackdrop('Default')
-end
 
 local function Update(self) self.Text:SetText(NameColor .. 'Micromenu' .. '|r') end
 local function Enable(self) self:SetScript('OnMouseDown', OnMouseDown) self:Update() end

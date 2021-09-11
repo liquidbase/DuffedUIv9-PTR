@@ -392,11 +392,6 @@ local OnMouseDown = function(self, btn)
 		else
 			LEM:EasyMenu(RightClickMenu1, DuffedUIImprovedCurrencyDropDown, 'cursor', 0, 0, 'MENU', 2)
 		end
-
-		for i = 1, 2 do
-			local fmb = _G["L_DropDownList"..i].MenuBackdrop
-			fmb:CreateBackdrop('Default')
-		end
 	end
 end
 
