@@ -698,7 +698,7 @@ function Module:SetStyle(tt)
 	if not tt or tt:IsForbidden() then return end
 	
 	tt:SetTemplate('Transparent')
-	tt.NineSlice:SetAlpha(0)
+	if tt.NineSlice then tt.NineSlice:SetAlpha(0) end
 	GameTooltipStatusBar:CreateBackdrop()
 end
 
