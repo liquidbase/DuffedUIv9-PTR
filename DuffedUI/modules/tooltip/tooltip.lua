@@ -697,25 +697,9 @@ end
 function Module:SetStyle(tt)
 	if not tt or tt:IsForbidden() then return end
 	
-	Mixin(tt, BackdropTemplateMixin)
-	tt:SetBackdrop({
-		bgFile = C['media']['blank'],
-		edgeFile = C['media']['blank'],
-		tile = false,
-		tileEdge = false,
-		tileSize = D['mult'],
-		edgeSize = D['mult'],
-		insets = {left = D['mult'], right = D['mult'], top = D['mult'], bottom = D['mult']}
-	})
-
-	if not IsAddOnLoaded('Aurora') then tt:SetBackdropBorderColor(C['general']['bordercolor']) end
-	tt:SetBackdropColor(C['media']['backdropcolor'][1],C['media']['backdropcolor'][2], C['media']['backdropcolor'][3], C['media']['backdropcolor'][4])
-
-	local r, g, b = tt:GetBackdropColor()
-	tt:SetBackdropColor(r, g, b, C['media']['backdropcolor'][4])
-
-	GameTooltipStatusBar:CreateBackdrop()
 	tt:SetTemplate('Transparent')
+	tt.NineSlice:SetAlpha(0)
+	GameTooltipStatusBar:CreateBackdrop()
 end
 
 function Module:MODIFIER_STATE_CHANGED(_, key)
