@@ -5,4 +5,5 @@
 	<Script file='templates\colors.lua' />
 	<Script file="LibSpellRange-1.0\LibSpellRange-1.0.lua"/>
 	<Include file="UTF8\UTF8.xml"/>
+	<Include file="LibUIDropDownMenu\LibUIDropDownMenu.xml"/>
 </Ui>
