@@ -18,7 +18,8 @@ local function ActiveTalents()
 	return Tree
 end
 
-local menuFrame = CreateFrame("Frame", "QuickClickMenu", UIParent, "UIDropDownMenuTemplate")
+--local menuFrame = CreateFrame("Frame", "QuickClickMenu", UIParent, "UIDropDownMenuTemplate")
+local menuFrame = LEM:Create_UIDropDownMenu("QuickClickMenu", UIParent)
 menuFrame:CreateBackdrop()
 menuFrame:SetTemplate('Default')
 
@@ -29,7 +30,7 @@ local RightClickMenu = { }
 RightClickMenu[1] = { text = L['ses']['eqmanager'], isTitle = true, notCheckable = true}
 
 -- Setting up the menu for later for each spec regardless of class, thanks to Simca for helping out with the function.
-local DuffedUISpecSwap = CreateFrame('Frame', 'DuffedUISpecSwap', UIParent, 'UIDropDownMenuTemplate, BackdropTemplate')
+local DuffedUISpecSwap = CreateFrame('Frame', 'DuffedUISpecSwap', UIParent, 'BackdropTemplate')
 DuffedUISpecSwap:SetTemplate('Transparent')
 DuffedUISpecSwap:RegisterEvent('PLAYER_LOGIN')
 DuffedUISpecSwap:RegisterEvent('PLAYER_EQUIPMENT_CHANGED')
@@ -154,9 +155,9 @@ spec:SetScript('OnLeave', function(self) GameTooltip:Hide() end)
 spec:SetScript('OnMouseUp', function(self, btn) 
 	local i = GetActiveSpecGroup()
 	if btn == "RightButton" then
-		LEM:EasyMenu(RightClickMenu, DuffedUISpecSwap, 'DuffedUI_Spechelper', 0, 0, 'MENU', 2)
+		LEM:EasyMenu(RightClickMenu, menuFrame, 'DuffedUI_Spechelper', 0, 0, 'MENU', 2)
 	elseif btn == "LeftButton" then
-		LEM:EasyMenu(LeftClickMenu, DuffedUISpecSwap, 'DuffedUI_Spechelper', 0, 0, 'MENU', 2)
+		LEM:EasyMenu(LeftClickMenu, menuFrame, 'DuffedUI_Spechelper', 0, 0, 'MENU', 2)
 	end
 
 	if btn == "MiddleButton" or IsShiftKeyDown() and btn == "RightButton" then ToggleTalentFrame() end
