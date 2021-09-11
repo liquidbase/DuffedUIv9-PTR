@@ -2,6 +2,7 @@ local D, C, L = unpack(select(2, ...))
 
 local DataTexts = D['DataTexts']
 
+local LEM = LibStub("LibUIDropDownMenu-4.0")
 local MenuFrame = CreateFrame('Frame', 'DataTextToggleDropDown', UIParent, 'UIDropDownMenuTemplate')
 local Anchors = DataTexts.Anchors
 local Menu = DataTexts.Menu
@@ -14,7 +15,7 @@ DataTexts.Remove = function() CurrentFrame:RemoveData() end
 local function OnMouseDown(self)
 	CurrentFrame = self
 	
-	EasyMenu(Menu, MenuFrame, 'cursor', 0, 0, 'MENU', 2)
+	LEM:EasyMenu(Menu, MenuFrame, 'cursor', 0, 0, 'MENU', 2)
 end
 
 function DataTexts:ToggleDataPositions()

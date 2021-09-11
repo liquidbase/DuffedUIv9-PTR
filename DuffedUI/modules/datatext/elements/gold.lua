@@ -1,5 +1,6 @@
 local D, C, L = unpack(select(2, ...))
 
+local LEM = LibStub("LibUIDropDownMenu-4.0")
 local DataText = D['DataTexts']
 local NameColor = DataText.NameColor
 local ValueColor = DataText.ValueColor
@@ -387,9 +388,9 @@ local OnMouseDown = function(self, btn)
 		ToggleAllBags()
 	else
 		if C['datatext']['oldcurrency'] then
-			EasyMenu(RightClickMenu2, DuffedUIImprovedCurrencyDropDown, 'cursor', 0, 0, 'MENU', 2)
+			LEM:EasyMenu(RightClickMenu2, DuffedUIImprovedCurrencyDropDown, 'cursor', 0, 0, 'MENU', 2)
 		else
-			EasyMenu(RightClickMenu1, DuffedUIImprovedCurrencyDropDown, 'cursor', 0, 0, 'MENU', 2)
+			LEM:EasyMenu(RightClickMenu1, DuffedUIImprovedCurrencyDropDown, 'cursor', 0, 0, 'MENU', 2)
 		end
 	end
 end

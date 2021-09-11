@@ -1,5 +1,6 @@
 local D, C, L = unpack(select(2, ...))
 
+local LEM = LibStub("LibUIDropDownMenu-4.0")
 local math_ceil = math.ceil
 local string_format = string.format
 local string_gsub = string.gsub
@@ -166,7 +167,7 @@ local function OnMouseUp(self, btn)
 		end
 	end
 
-	EasyMenu(menuList, menuFrame, 'cursor', 0, 0, 'MENU', 2)
+	LEM:EasyMenu(menuList, menuFrame, 'cursor', 0, 0, 'MENU', 2)
 end
 
 local function OnEnter(self)

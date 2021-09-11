@@ -1,5 +1,6 @@
 local D, C, L = unpack(select(2, ...))
 
+local LEM = LibStub("LibUIDropDownMenu-4.0")
 local DataText = D['DataTexts']
 local NameColor = DataText.NameColor
 local ValueColor = DataText.ValueColor
@@ -119,7 +120,7 @@ elseif D['Level'] > 35 then
 	tinsert(micromenu, {text = GARRISON_LANDING_PAGE_TITLE, icon = '', notCheckable = 1, func = function() GarrisonLandingPage_Toggle() end})
 end
 
-local function OnMouseDown() EasyMenu(micromenu, menuFrame, 'cursor', 0, 0, 'MENU') end
+local function OnMouseDown() LEM:EasyMenu(micromenu, menuFrame, 'cursor', 0, 0, 'MENU') end
 local function Update(self) self.Text:SetText(NameColor .. 'Micromenu' .. '|r') end
 local function Enable(self) self:SetScript('OnMouseDown', OnMouseDown) self:Update() end
 

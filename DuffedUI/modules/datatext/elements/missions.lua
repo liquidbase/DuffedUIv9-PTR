@@ -1,5 +1,6 @@
 local D, C, L = unpack(select(2, ...))
 
+local LEM = LibStub("LibUIDropDownMenu-4.0")
 local DataText = D['DataTexts']
 local NameColor = DataText.NameColor
 local ValueColor = DataText.ValueColor
@@ -370,7 +371,7 @@ end
 
 local OnMouseDown = function(self)
 	if InCombatLockdown() then _G.UIErrorsFrame:AddMessage(D['InfoColor'].._G.ERR_NOT_IN_COMBAT) return end
-	EasyMenu(menuList, menuFrame, 'cursor', 0, 0, 'MENU', 1)
+	LEM:EasyMenu(menuList, menuFrame, 'cursor', 0, 0, 'MENU', 1)
 end
 
 local inProgressMissions = {}

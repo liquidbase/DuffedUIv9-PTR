@@ -14,6 +14,8 @@ local ChangeLogData = {
 	-- 115 chars per line
 	"Changes:",
 		"- Fixed borders for gametooltip",
+		"- Added LibDropDownMenu for custom menus",
+		"- Replaced EasyMenu with LEM:EasyMenu for better menu control",
 		"- Bugfixes",
 	" ",
 	"Important:",

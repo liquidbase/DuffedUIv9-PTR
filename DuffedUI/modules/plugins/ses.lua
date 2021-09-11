@@ -7,7 +7,7 @@ local cm = '|cff9a1212'
 local dr, dg, db = unpack({ .4, .4, .4 })
 local f, fs, ff = C['media']['font'], 11, 'THINOUTLINE'
 local Enablegear = C['misc']['sesenablegear']
-local menuFrame = CreateFrame("Frame", "QuickClickMenu", UIParent, "UIDropDownMenuTemplate")
+local LEM = LibStub("LibUIDropDownMenu-4.0")
 local C_SpecializationInfo_GetAllSelectedPvpTalentIDs = C_SpecializationInfo.GetAllSelectedPvpTalentIDs
 
 local listIcon = '|T%s:14:14:0:0:50:50:4:46:4:46|t'
@@ -17,6 +17,10 @@ local function ActiveTalents()
 	local Tree = GetSpecialization(false, false, GetActiveSpecGroup())
 	return Tree
 end
+
+local menuFrame = CreateFrame("Frame", "QuickClickMenu", UIParent, "UIDropDownMenuTemplate")
+menuFrame:CreateBackdrop()
+menuFrame:SetTemplate('Default')
 
 local LeftClickMenu = { }
 LeftClickMenu[1] = { text = L['dt']['specmenu'], isTitle = true, notCheckable = true}
@@ -150,9 +154,9 @@ spec:SetScript('OnLeave', function(self) GameTooltip:Hide() end)
 spec:SetScript('OnMouseUp', function(self, btn) 
 	local i = GetActiveSpecGroup()
 	if btn == "RightButton" then
-		EasyMenu(RightClickMenu, DuffedUISpecSwap, 'DuffedUI_Spechelper', 0, 0, 'MENU', 2)
+		LEM:EasyMenu(RightClickMenu, DuffedUISpecSwap, 'DuffedUI_Spechelper', 0, 0, 'MENU', 2)
 	elseif btn == "LeftButton" then
-		EasyMenu(LeftClickMenu, DuffedUISpecSwap, 'DuffedUI_Spechelper', 0, 0, 'MENU', 2)
+		LEM:EasyMenu(LeftClickMenu, DuffedUISpecSwap, 'DuffedUI_Spechelper', 0, 0, 'MENU', 2)
 	end
 
 	if btn == "MiddleButton" or IsShiftKeyDown() and btn == "RightButton" then ToggleTalentFrame() end
@@ -215,5 +219,5 @@ toggle:SetScript('OnLeave', function(self) self:SetBackdropBorderColor(unpack(C[
 
 toggle:SetScript('OnMouseDown', function(self)
 	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
-	EasyMenu(menuList, menuFrame, 'DuffedUI_Spechelper', 0, -150, 'MENU', 2)
+	LEM:EasyMenu(menuList, menuFrame, 'DuffedUI_Spechelper', 0, -150, 'MENU', 2)
 end)

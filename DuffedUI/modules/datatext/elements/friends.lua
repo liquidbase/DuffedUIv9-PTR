@@ -1,5 +1,6 @@
 local D, C, L = unpack(select(2, ...))
 
+local LEM = LibStub("LibUIDropDownMenu-4.0")
 local DataText = D['DataTexts']
 local NameColor = DataText.NameColor
 local ValueColor = DataText.ValueColor
@@ -370,7 +371,7 @@ local function OnMouseDown(self, btn)
 			end
 		end
 
-		EasyMenu(menuList, menuFrame, 'cursor', 0, 0, 'MENU', 2)
+		LEM:EasyMenu(menuList, menuFrame, 'cursor', 0, 0, 'MENU', 2)
 	else
 		ToggleFriendsFrame(1)
 	end

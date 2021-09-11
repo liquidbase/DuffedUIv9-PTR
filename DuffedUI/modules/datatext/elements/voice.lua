@@ -1,5 +1,6 @@
 local D, C, L = unpack(select(2, ...))
 
+local LEM = LibStub("LibUIDropDownMenu-4.0")
 local DataText = D['DataTexts']
 local NameColor = DataText.NameColor
 local ValueColor = DataText.ValueColor
@@ -30,7 +31,7 @@ local menuList = {
 }
 
 local OnMouseDown = function(self)
-	if btn == 'RightButton' then EasyMenu(menuList, menuFrame, 'cursor', 0, 0, 'MENU', 2) else ToggleChannelFrame() end
+	if btn == 'RightButton' then LEM:EasyMenu(menuList, menuFrame, 'cursor', 0, 0, 'MENU', 2) else ToggleChannelFrame() end
 end
 
 local OnLeave = function() GameTooltip:Hide() end
