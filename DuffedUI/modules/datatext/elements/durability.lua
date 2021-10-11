@@ -4,15 +4,41 @@ local InCombatLockdown = InCombatLockdown
 local ToggleCharacter = ToggleCharacter
 local IsShiftKeyDown = IsShiftKeyDown
 
-local format = string.format
-local floor = math.floor
-local sort = table.sort
-local GetInventoryItemLink = GetInventoryItemLink
+local _G = _G
+local select = select
+local wipe = wipe
+local format, pairs = format, pairs
 local GetInventoryItemDurability = GetInventoryItemDurability
+local ToggleCharacter = ToggleCharacter
+local InCombatLockdown = InCombatLockdown
+local IsShiftKeyDown = IsShiftKeyDown
+local GetInventoryItemTexture = GetInventoryItemTexture
+local GetInventoryItemLink = GetInventoryItemLink
+local GetMoneyString = GetMoneyString
+
+local DURABILITY = DURABILITY
+local REPAIR_COST = REPAIR_COST
+local tooltipString = '%d%%'
+local totalDurability = 0
+local invDurability = {}
+local totalRepairCost
 
 local DataText = D['DataTexts']
 local NameColor = DataText.NameColor
 local ValueColor = DataText.ValueColor
+
+local slots = {
+	[1] = _G.INVTYPE_HEAD,
+	[3] = _G.INVTYPE_SHOULDER,
+	[5] = _G.INVTYPE_CHEST,
+	[6] = _G.INVTYPE_WAIST,
+	[7] = _G.INVTYPE_LEGS,
+	[8] = _G.INVTYPE_FEET,
+	[9] = _G.INVTYPE_WRIST,
+	[10] = _G.INVTYPE_HAND,
+	[16] = _G.INVTYPE_WEAPONMAINHAND,
+	[17] = _G.INVTYPE_WEAPONOFFHAND,
+}
 
 local OnMouseDown = function(self, btn) ToggleCharacter('PaperDollFrame') end
 
@@ -23,22 +49,19 @@ local OnEnter = function(self)
 
 	GameTooltip:SetOwner(self:GetTooltipAnchor())
 	GameTooltip:ClearLines()
-	GameTooltip:AddLine(ARMOR)
+	GameTooltip:AddLine(DURABILITY)
+	GameTooltip:AddLine(' ')
 
-	for i = 1, 11 do
-		if (L.Slots[i][3] ~= 1000) then
-			local Green, Red
-
-			Green = L.Slots[i][3] * 2
-			Red = 1 - Green
-
-			GameTooltip:AddDoubleLine(L['Slots'][i][2], floor(L['Slots'][i][3] * 100) .. '%', 1, 1, 1, Red + 1, Green, 0)
-		end
+	for slot, durability in pairs(invDurability) do
+		GameTooltip:AddDoubleLine(format('|T%s:14:14:0:0:64:64:4:60:4:60|t  %s', GetInventoryItemTexture('player', slot), GetInventoryItemLink('player', slot)), format(tooltipString, durability), 1, 1, 1, D['ColorGradient'](durability * 0.01, 1, .1, .1, 1, 1, .1, .1, 1, .1))
 	end
 
-	if IsShiftKeyDown() then
-		D['DTConduit']()
+	if totalRepairCost > 0 then
+		GameTooltip:AddLine(' ')
+		GameTooltip:AddDoubleLine(REPAIR_COST, GetMoneyString(totalRepairCost), .6, .8, 1, 1, 1, 1)
 	end
+
+	if IsShiftKeyDown() then D['DTConduit']() end
 
 	GameTooltip:AddLine(' ')
 	GameTooltip:AddDoubleLine(KEY_BUTTON1..':', L['dt']['durabilityleft'], 1, 1, 1)
@@ -47,31 +70,29 @@ local OnEnter = function(self)
 end
 
 local function Update(self, event)
-	local Total = 0
-	local Current, Max
+	totalDurability = 100
+	totalRepairCost = 0
 
-	for i = 1, 11 do
-		if (GetInventoryItemLink('player', L['Slots'][i][1]) ~= nil) then
-			Current, Max = GetInventoryItemDurability(L['Slots'][i][1])
+	wipe(invDurability)
 
-			if (Current) then
-				L['Slots'][i][3] = Current / Max
-				Total = Total + 1
+	for index in pairs(slots) do
+		local currentDura, maxDura = GetInventoryItemDurability(index)
+		if currentDura and maxDura > 0 then
+			local perc = (currentDura/maxDura)*100
+			invDurability[index] = perc
+
+			if perc < totalDurability then
+				totalDurability = perc
 			end
+
+			totalRepairCost = totalRepairCost + select(3, D['ScanTooltip']:SetInventoryItem('player', index))
 		end
 	end
 
-	sort(L['Slots'], function(a, b)
-		return a[3] < b[3]
-	end)
+	local r, g, b = D['ColorGradient'](totalDurability * .01, 1, .1, .1, 1, 1, .1, .1, 1, .1)
+	local hex = D['RGBToHex'](r, g, b)
 
-	if (Total > 0) then
-		self.Text:SetFormattedText('%s: %s%%', NameColor .. ARMOR .. '|r', ValueColor .. floor(L['Slots'][1][3] * 100) .. '|r')
-	else
-		self.Text:SetFormattedText('%s: %s%%', NameColor .. ARMOR .. '|r', ValueColor .. '100' .. '|r')
-	end
-
-	Total = 0
+	self.Text:SetFormattedText(NameColor .. DURABILITY ..  '|r: %s%d%%|r', hex, totalDurability)
 
 	if event == 'MODIFIER_STATE_CHANGED' and not IsAltKeyDown() and GetMouseFocus() == self then OnEnter(self) end
 end
